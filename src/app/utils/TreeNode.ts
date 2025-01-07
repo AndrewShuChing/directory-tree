@@ -1,4 +1,4 @@
-export class TreeNode {
+export default class TreeNode {
     value: string;
     children: TreeNode[];
 
@@ -22,7 +22,7 @@ export class TreeNode {
 
     isDescendant(ancestor: TreeNode, node: TreeNode): boolean {
         if (ancestor === node) return true;
-        for (let child of ancestor.children) {
+        for (const child of ancestor.children) {
             if (this.isDescendant(child, node)) {
                 return true;
             }

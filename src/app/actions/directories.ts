@@ -1,9 +1,9 @@
 'use server';
-import { TreeNode } from '../utils/TreeNode';
+import TreeNode from '../utils/TreeNode';
 
-let root = new TreeNode('Root');
+const root = new TreeNode('Root');
 
-const createDirectory = (path: string) => {
+function createDirectory(path: string) {
     const directories = path.split('/');
     let parent = root;
 
@@ -23,7 +23,7 @@ const createDirectory = (path: string) => {
     };
 }
 
-const moveDirectory = (childPath: string, destinationPath: string) => {
+function moveDirectory(childPath: string, destinationPath: string) {
     const directories = childPath.split('/');
     let parentPath = null;
     directories.pop();
@@ -37,7 +37,7 @@ const moveDirectory = (childPath: string, destinationPath: string) => {
     }
 }
 
-const deleteDirectory = (path: string) => {
+function deleteDirectory(path: string) {
     const child = root.getChildFromPath(path);
     const directories = path.split('/');
     let parentPath = null;
@@ -46,13 +46,12 @@ const deleteDirectory = (path: string) => {
     const parent = parentPath ? root.getChildFromPath(parentPath) : root;
 
     if(child && parent) {
-        parent.removeChild
+        parent.removeChild(child);
         return true;
     } else {
         return false;
     }
 }
-
 
 export async function getOutputText(inputText: string) {
     root.clear();
@@ -67,7 +66,6 @@ export async function getOutputText(inputText: string) {
 
         switch (action) {
             case 'create':
-                //createDirectory could be modified to return a boolean to display an error message on failure
                 createDirectory(command[1]);
                 outputText += line + '\n';
                 break;
@@ -76,7 +74,7 @@ export async function getOutputText(inputText: string) {
                 outputText += line + '\n';
                 break;
             case 'delete':
-                let isSuccess = deleteDirectory(command[1]);
+                const isSuccess = deleteDirectory(command[1]);
                 outputText += line + '\n';
                 outputText += isSuccess ? '': 'Cannot delete ' + command[1] + ' - ' + root.getMissingDirectory(command[1]) + ' does not exist\n';
                 break;
@@ -91,4 +89,3 @@ export async function getOutputText(inputText: string) {
 
     return outputText;
 }
-
