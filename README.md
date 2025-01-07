@@ -19,6 +19,7 @@
 3. **Build and run the development environment**:
 
    ```bash
+   npm install
    docker compose up -d
    ```
 
@@ -30,7 +31,6 @@
 
 ### Running tests
 
-    npm install
     npm test
 
 ## Technologies Used

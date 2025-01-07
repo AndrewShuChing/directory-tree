@@ -1,12 +1,17 @@
 'use client';
 
 import { Button, Card, Container, Textarea, Grid, rem} from '@mantine/core'
-import { useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { getOutputText } from '@/app/actions/directories'
 
 export default function Home() {
-  const [inputTextAreaValue, setInputTextAreaValue] = useState('');
-  const [outputTextAreaValue, setOutputTextAreaValue] = useState('');
+  const [inputTextAreaValue, setInputTextAreaValue]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [outputTextAreaValue, setOutputTextAreaValue]: [string, Dispatch<SetStateAction<string>>] = useState('');
+
+  const handleButtonClick = async () => {
+    const outputText = await getOutputText(inputTextAreaValue);
+    setOutputTextAreaValue(outputText);
+  }
 
   return (
     <Container size={800} my={50}>
@@ -16,7 +21,7 @@ export default function Home() {
             <Textarea
             id="inputTextArea"
             value={inputTextAreaValue} 
-            onChange={(e) => setInputTextAreaValue(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setInputTextAreaValue(e.target.value)}
             label="Input"
             placeholder="Input placeholder"
             autosize
@@ -37,10 +42,7 @@ export default function Home() {
             />  
           </Grid.Col>
           <Grid.Col span={4}>
-            <Button id="submitBtn"variant="filled" fullWidth onClick={async () => {
-              const outputText = await getOutputText(inputTextAreaValue);
-              setOutputTextAreaValue(outputText);
-            }}>
+            <Button id="submitBtn"variant="filled" fullWidth onClick={handleButtonClick}>
               Submit
             </Button>
           </Grid.Col>
