@@ -62,7 +62,7 @@ function moveDirectory(childPath: string, destinationPath: string): boolean {
 function deleteDirectory(path: string): boolean {
     const child = root.getChildFromPath(path);
     const parentPath = path.slice(0, path.lastIndexOf('/'));
-    const parent = parentPath ? root.getChildFromPath(parentPath) : root;
+    const parent = path.includes('/') ? root.getChildFromPath(parentPath) : root;
 
     if (parent && child) {
         parent.removeChild(child);
