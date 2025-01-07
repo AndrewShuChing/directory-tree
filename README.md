@@ -12,7 +12,7 @@
 
    ```bash
    git clone https://github.com/AndrewShuChing/directory-tree.git
-   cd next15-starter
+   cd directory-tree
    ```
 
 3. **Build and run the development environment**:
